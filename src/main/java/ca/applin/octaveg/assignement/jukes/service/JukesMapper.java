@@ -9,7 +9,8 @@ public interface JukesMapper {
 
     // todo @temp
     // check why mapstructs returns always null, or why errors is thrown when
-    // manually specify source and target properties
+    // manually specify source and target properties. Probably something is wrong
+    // with annotationProcessor in pom.xml
     default JukesDto jukesEntityToDto(JukesEntity jukesEntity) {
         if (jukesEntity == null) {
             return null;
