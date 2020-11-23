@@ -17,7 +17,6 @@ public class ErrorDto {
     @Data
     @AllArgsConstructor
     static class ErrorItems {
-
         private int status;
         private String message;
         private String details;

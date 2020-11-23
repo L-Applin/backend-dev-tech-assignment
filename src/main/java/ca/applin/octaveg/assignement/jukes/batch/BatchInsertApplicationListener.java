@@ -1,17 +1,13 @@
 package ca.applin.octaveg.assignement.jukes.batch;
 
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
 
 import ca.applin.octaveg.assignement.jukes.data.JukesEntity;
 import ca.applin.octaveg.assignement.jukes.data.JukesRepository;
-import ca.applin.octaveg.assignement.jukes.service.jukebox.Jukebox;
-import ca.applin.octaveg.assignement.jukes.service.jukebox.JukeboxComponent;
 import ca.applin.octaveg.assignement.jukes.service.jukebox.JukeboxService;
 import ca.applin.octaveg.assignement.jukes.service.settings.JukeboxSetting;
 import ca.applin.octaveg.assignement.jukes.service.settings.SettingsService;
 import java.util.List;
-import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -26,29 +22,16 @@ public class BatchInsertApplicationListener implements ApplicationListener<Appli
     private final JukeboxService jukeboxService;
     private final SettingsService settingsService;
     private final JukesRepository jukesRepository;
+    private final JukesSettingsBusinessLogic jukesBusinessLogic;
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         List<JukeboxSetting> jukeboxSettingList = settingsService.getAllSettings();
         List<JukesEntity> jukesToSave = jukeboxService.getAllJukeboxes().stream()
-                .map(juke -> toJukesEntity(juke, jukeboxSettingList))
+                .map(juke -> jukesBusinessLogic.toJukesEntity(juke, jukeboxSettingList))
                 .collect(toList());
         jukesRepository.saveAll(jukesToSave);
         log.info("Saved {} mock jukebox entities into Database.", jukesRepository.count());
     }
 
-    public JukesEntity toJukesEntity(Jukebox juke, List<JukeboxSetting> jukeboxSettingList) {
-        Set<String> components = juke.getComponents().stream()
-                .map(JukeboxComponent::getName)
-                .collect(toSet());
-        List<String> supportedSettings = jukeboxSettingList.stream()
-                .filter(jukeboxSetting -> components.containsAll(jukeboxSetting.getRequires()))
-                .map(JukeboxSetting::getId)
-                .collect(toList());
-        return new JukesEntity(
-                juke.getId(),
-                juke.getModel(),
-                supportedSettings,
-                juke.getComponentsNames());
-    }
 }

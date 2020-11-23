@@ -7,7 +7,6 @@ import lombok.Data;
 
 @Data
 public class Settings {
-
     @JsonProperty
     private List<JukeboxSetting> settings;
 }

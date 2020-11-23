@@ -1,2 +1,2 @@
 ###
-GET localhost:8080/jukes?settingId=86506865-f971-496e-9b90-75994f251459
+GET localhost:8080/api/jukes?settingId=86506865-f971-496e-9b90-75994f251459

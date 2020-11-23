@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -17,7 +18,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Data
+@Builder
 public class JukesEntity {
+
+    public static final String ID_PROPERTY = "id";
 
     @Id
     private String id;

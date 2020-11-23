@@ -7,9 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface JukesRepository extends PagingAndSortingRepository<JukesEntity, String> {
-
     Page<JukesEntity> findBySettings(String setting, Pageable pageable);
 
-    Page<JukesEntity> findBySettingsContainingAndModel(String setting, String model,
-            Pageable pageable);
+    Page<JukesEntity> findBySettingsAndModel(String setting, String model, Pageable pageable);
 }

@@ -7,5 +7,18 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface JukesMapper {
 
-    JukesDto jukesEntityuToDto(JukesEntity jukesEntity);
+    // todo @temp
+    // check why mapstructs returns always null, or why errors is thrown when
+    // manually specify source and target properties
+    default JukesDto jukesEntityToDto(JukesEntity jukesEntity) {
+        if (jukesEntity == null) {
+            return null;
+        }
+        return JukesDto.builder()
+                .id(jukesEntity.getId())
+                .model(jukesEntity.getModel())
+                .settings(jukesEntity.getSettings())
+                .components(jukesEntity.getComponents())
+                .build();
+    }
 }
