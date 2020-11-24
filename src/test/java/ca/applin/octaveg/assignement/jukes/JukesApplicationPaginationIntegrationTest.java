@@ -1,5 +1,6 @@
 package ca.applin.octaveg.assignement.jukes;
 
+import static ca.applin.octaveg.assignement.jukes.JukesConstant.BASE_JUKES_URL;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -65,7 +66,7 @@ public class JukesApplicationPaginationIntegrationTest {
 
     @Test
     public void when_find_for_page__Expect_that_number_only() throws Exception {
-        mockMvc.perform(get("/api/jukes")
+        mockMvc.perform(get(BASE_JUKES_URL)
                 .param("settingId", "setting-test")
                 .param("offset", "10")
                 .param("limit", "20"))
@@ -75,7 +76,7 @@ public class JukesApplicationPaginationIntegrationTest {
 
     @Test
     public void when_no_paging__Expect_everything() throws Exception {
-        mockMvc.perform(get("/api/jukes")
+        mockMvc.perform(get(BASE_JUKES_URL)
                 .param("settingId", "setting-test"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1000)));

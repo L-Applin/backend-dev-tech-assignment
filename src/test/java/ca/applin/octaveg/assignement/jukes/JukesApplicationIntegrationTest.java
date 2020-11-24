@@ -1,5 +1,6 @@
 package ca.applin.octaveg.assignement.jukes;
 
+import static ca.applin.octaveg.assignement.jukes.JukesConstant.BASE_JUKES_URL;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -28,7 +29,7 @@ class JukesApplicationIntegrationTest {
     @Test
     public void get_settingId_exist__Expect_200() throws Exception {
         // in test json, only jukebox id-1 has settiongs-id-1
-        mockMvc.perform(get("/api/jukes")
+        mockMvc.perform(get(BASE_JUKES_URL)
                 .param("settingId", "setting-id-1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
@@ -43,7 +44,7 @@ class JukesApplicationIntegrationTest {
 
     @Test
     public void get_settingId_empty_setting__Expect_200_all_jukes() throws Exception {
-        mockMvc.perform(get("/api/jukes")
+        mockMvc.perform(get(BASE_JUKES_URL)
                 .param("settingId", "setting-id-empty"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(4)));
@@ -51,14 +52,14 @@ class JukesApplicationIntegrationTest {
 
     @Test
     public void get_setting_id_not_existing__Expect_204_no_content() throws Exception {
-        mockMvc.perform(get("/api/jukes")
+        mockMvc.perform(get(BASE_JUKES_URL)
                 .param("settingId", "something-that-does-not-exist"))
                 .andExpect(status().isNoContent());
     }
 
     @Test
     public void get_without_settingId__Expect_400_bad_request() throws Exception {
-        mockMvc.perform(get("/api/jukes"))
+        mockMvc.perform(get(BASE_JUKES_URL))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errors[0].status", is(400)))
                 .andExpect(jsonPath("$.errors[0].message", notNullValue()))
@@ -68,7 +69,7 @@ class JukesApplicationIntegrationTest {
 
     @Test
     public void get_settingId_and_model_present__Expect_200_OK() throws Exception {
-        mockMvc.perform(get("/api/jukes")
+        mockMvc.perform(get(BASE_JUKES_URL)
                 .param("settingId", "setting-id-2")
                 .param("model", "model-1"))
                 .andExpect(status().isOk())

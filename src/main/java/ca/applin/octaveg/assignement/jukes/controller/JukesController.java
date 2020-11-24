@@ -1,5 +1,6 @@
 package ca.applin.octaveg.assignement.jukes.controller;
 
+import ca.applin.octaveg.assignement.jukes.JukesConstant;
 import ca.applin.octaveg.assignement.jukes.dto.JukesDto;
 import ca.applin.octaveg.assignement.jukes.service.JukesService;
 import io.swagger.annotations.ApiOperation;
@@ -22,7 +23,7 @@ public class JukesController {
             notes = "",
             response = JukesDto.class,
             responseContainer = "List")
-    @GetMapping("/api/jukes")
+    @GetMapping(JukesConstant.BASE_JUKES_URL)
     public ResponseEntity<List<JukesDto>> getJukebox(
             @ApiParam(value = "The setting to search for", required = true, example = "86506865-f971-496e-9b90-75994f251459") @RequestParam String settingId,
             @ApiParam(value = "A specific jukebox model to search for.", example = "fusion") @RequestParam(required = false) Optional<String> model,
